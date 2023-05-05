@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () async {
                       FlutterSecureStorage storage =
                           const FlutterSecureStorage();
-                      await storage.delete(key: "userData");
+                      await storage.deleteAll();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (ctx) => const LoadinScreen()),

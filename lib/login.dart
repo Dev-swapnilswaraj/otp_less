@@ -29,37 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
         //TODO: handle whatsapp not found
         break;
       default:
+        setState(() {
+          switchToHome = true;
+        });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
   }
 
   // ** Function that is called when page is loaded
   // ** We can check the auth state in this function
-  Future<void> initPlatformState() async {
-    _otplessFlutterPlugin.authStream.listen((token) async {
-      FlutterSecureStorage storage = const FlutterSecureStorage();
-      // await storage.write(key: "waId", value: token.toString());
-      http.Response data =
-          await http.post(Uri.parse("https://muncho.authlink.me"),
-              headers: {
-                'Content-Type': 'application/json',
-                'Charset': 'utf-8',
-                'clientId': '4ancmj4m',
-                'clientSecret': 'po9a3l50fejcuxnv'
-              },
-              body: jsonEncode({"waId": token.toString()}));
-      var val = jsonDecode(data.body);
-      UserData user = UserData.fromJson(val['user']);
-      await storage.write(key: "userData", value: jsonEncode(user.toJson()));
-      switchToHome = true;
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
